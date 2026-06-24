@@ -3,8 +3,7 @@ import task2.InvalidUserException;
 import task2.User;
 import task2.UserValidator;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /*
 
@@ -37,21 +36,18 @@ public class UserValidatorTest {
         UserValidator userValidator = new UserValidator();
         userValidator.setValidation(true);
 
-        assertTrue(userValidator.validateName(user1));
-        assertTrue(userValidator.validateAge(user1));
-        assertTrue(userValidator.validateEmail(user1));
+        assertDoesNotThrow(() -> userValidator.validate(user1));
     }
 
     // 2 - проверка, что валидация невозможна, если validationEnabled = false
     @Test
     public void userCanNotValidateIfValidationEnabledIsFalse() {
+
         User user1 = new User("Вася", 19, "vasya@gmail.com");
         UserValidator userValidator = new UserValidator();
         userValidator.setValidation(false);
 
-        assertThrows(InvalidUserException.class, () -> userValidator.validateName(user1));
-        assertThrows(InvalidUserException.class, () -> userValidator.validateAge(user1));
-        assertThrows(InvalidUserException.class, () -> userValidator.validateEmail(user1));
+        assertDoesNotThrow(() -> userValidator.validate(user1));
     }
 
 
@@ -62,7 +58,7 @@ public class UserValidatorTest {
         UserValidator userValidator = new UserValidator();
         userValidator.setValidation(true);
 
-        assertThrows(InvalidUserException.class, () -> userValidator.validateName(user1));
+        assertThrows(InvalidUserException.class, () -> userValidator.validate(user1));
     }
 
     // 5 - проверка имени - начинается с маленькой буквы
@@ -72,7 +68,7 @@ public class UserValidatorTest {
         UserValidator userValidator = new UserValidator();
         userValidator.setValidation(true);
 
-        assertThrows(InvalidUserException.class, () -> userValidator.validateName(user1));
+        assertThrows(InvalidUserException.class, () -> userValidator.validate(user1));
     }
 
     // 6 - проверка имени - null
@@ -82,7 +78,7 @@ public class UserValidatorTest {
         UserValidator userValidator = new UserValidator();
         userValidator.setValidation(true);
 
-        assertThrows(InvalidUserException.class, () -> userValidator.validateName(user1));
+        assertThrows(InvalidUserException.class, () -> userValidator.validate(user1));
     }
 
     // 8 - проверка возраста: возраста меньше 18
@@ -92,7 +88,7 @@ public class UserValidatorTest {
         UserValidator userValidator = new UserValidator();
         userValidator.setValidation(true);
 
-        assertThrows(InvalidUserException.class, () -> userValidator.validateAge(user1));
+        assertThrows(InvalidUserException.class, () -> userValidator.validate(user1));
     }
 
     // 9 - проверка возраста: возраст больше 100
@@ -102,7 +98,7 @@ public class UserValidatorTest {
         UserValidator userValidator = new UserValidator();
         userValidator.setValidation(true);
 
-        assertThrows(InvalidUserException.class, () -> userValidator.validateAge(user1));
+        assertThrows(InvalidUserException.class, () -> userValidator.validate(user1));
     }
 
     // 11 - проверка email - некоррекный email
@@ -112,7 +108,7 @@ public class UserValidatorTest {
         UserValidator userValidator = new UserValidator();
         userValidator.setValidation(true);
 
-        assertThrows(InvalidUserException.class, () -> userValidator.validateEmail(user1));
+        assertThrows(InvalidUserException.class, () -> userValidator.validate(user1));
     }
 
     // 12 - проверка email - пустой email
@@ -122,7 +118,7 @@ public class UserValidatorTest {
         UserValidator userValidator = new UserValidator();
         userValidator.setValidation(true);
 
-        assertThrows(InvalidUserException.class, () -> userValidator.validateEmail(user1));
+        assertThrows(InvalidUserException.class, () -> userValidator.validate(user1));
     }
 
     // 13 - проверка email - null
@@ -132,7 +128,7 @@ public class UserValidatorTest {
         UserValidator userValidator = new UserValidator();
         userValidator.setValidation(true);
 
-        assertThrows(InvalidUserException.class, () -> userValidator.validateEmail(user1));
+        assertThrows(InvalidUserException.class, () -> userValidator.validate(user1));
     }
 
 

@@ -29,34 +29,35 @@ public class UserValidator {
         this.validationEnabled = validationEnabled;
     }
 
+    public void validate(User user) {
+        if (!validationEnabled) return;
+        validateName(user.getName());
+        validateAge(user.getAge());
+        validateEmail(user.getEmail());
+    }
+
     // Проверка имени: Имя должно быть не пустым и начинаться с заглавной буквы.
-    public boolean validateName(User user) {
-        if (!validationEnabled) {throw new InvalidUserException("Validation is unabled!");}
-        if (user.getName() == null ) {throw new InvalidUserException("Name is null");}
-        if (user.getName().isEmpty() ) {throw new InvalidUserException("Name is empty!");}
-        if (!(Character.isUpperCase(user.getName().charAt(0)))) {throw new InvalidUserException("Name starts with a lowercase letter!");}
-        else return true;
+    private void validateName(String name) {
+        if (name == null ) {throw new InvalidUserException("Name is null");}
+        if (name.isEmpty() ) {throw new InvalidUserException("Name is empty!");}
+        if (!(Character.isUpperCase(name.charAt(0)))) {throw new InvalidUserException("Name starts with a lowercase letter!");}
     }
 
 
     // Проверка возраста: Возраст должен быть в пределах от 18 до 100 лет.
 
-    public boolean validateAge(User user) {
-        if (!validationEnabled) {throw new InvalidUserException("Validation is unabled!");}
-        if (user.getAge() < 18 || user.getAge() > 100) {throw new InvalidUserException("Age out of range");}
-        else return true;
+    private void validateAge(int age) {
+        if (age < 18 || age > 100) {throw new InvalidUserException("Age out of range");}
     }
 
 
     // Проверка email: Email должен соответствовать стандартному формату электронной почты
 
-    public boolean validateEmail(User user) {
-        if (!validationEnabled) {throw new InvalidUserException("Validation is unabled!");}
-        if (user.getEmail() == null ) {throw new InvalidUserException("Email is null");}
-        if (user.getEmail().isEmpty() ) {throw new InvalidUserException("Email is empty!");}
-        if (!(user.getEmail().matches("^[\\w.-]+@[\\w.-]+\\.\\w{2,}$"))) {
+    private void validateEmail(String email) {
+        if (email == null ) {throw new InvalidUserException("Email is null");}
+        if (email.isEmpty() ) {throw new InvalidUserException("Email is empty!");}
+        if (!(email.matches("^[\\w.-]+@[\\w.-]+\\.\\w{2,}$"))) {
             throw new InvalidUserException("Email format is not correct!");}
-        else return true;
     }
 
 

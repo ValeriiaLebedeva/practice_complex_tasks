@@ -71,7 +71,7 @@ public class InventoryService {
 
     public List<Product> getListOfProductsFilteredByCategory(String category) {
 
-        if (!inventoryMap.containsKey(category)) {
+/*        if (!inventoryMap.containsKey(category)) {
             throw new OutOfStockException("Отсутствует данная категория!");
         }
 
@@ -81,7 +81,25 @@ public class InventoryService {
             throw new OutOfStockException("Отсутствуют продукты в данной категории!");
         }
 
-        return inventoryMap.get(category);
+        return inventoryMap.get(category);*/
+
+
+        // с использованием stream api
+        if (!inventoryMap.containsKey(category)) {
+            throw new OutOfStockException("Отсутствует данная категория!");
+        }
+
+        List<Product> listOfProductOfCategory = inventoryMap.entrySet().stream()
+                .filter(entry -> entry.getKey().equalsIgnoreCase(category))
+                .flatMap(entry -> entry.getValue().stream())
+                .toList();
+
+        if (listOfProductOfCategory.isEmpty()) {
+            throw new OutOfStockException("Отсутствуют продукты в данной категории!");
+        }
+
+        return listOfProductOfCategory;
+
     }
 
 

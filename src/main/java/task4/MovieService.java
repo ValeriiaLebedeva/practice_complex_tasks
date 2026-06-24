@@ -78,6 +78,10 @@ public class MovieService<T extends Number> {
 
     // Метод по получению копии всех оценок
     public synchronized Map<Movie, List<Rating<T>>> getMovieServiceMap() {
-        return Map.copyOf(movieServiceMap);
+        return movieServiceMap.entrySet().stream()
+                .collect(Collectors.toUnmodifiableMap(
+                        Map.Entry::getKey,
+                        entry -> List.copyOf(entry.getValue())
+                ));
     }
 }

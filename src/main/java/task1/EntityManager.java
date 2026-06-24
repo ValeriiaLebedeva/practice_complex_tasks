@@ -35,6 +35,9 @@ public class EntityManager <T extends Entity> {
 
     // Добавление элементов: Метод для добавления объекта в коллекцию. Должен быть потокобезопасным.
     public void addEntity(T entity) {
+        if (entity == null) {
+            throw new IllegalArgumentException("Ошибка, вы пытаетесь добавить null!");
+        }
         entities.add(entity);
     }
 
